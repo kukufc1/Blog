@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-// import CreateArticle from '../CreateArticle/CreateArticle';
 import '../Header/Header.css';
 
 const Header = ({ user, onLogout }) => {
@@ -25,7 +23,7 @@ const Header = ({ user, onLogout }) => {
                 <img
                   src={avatar}
                   alt="Avatar"
-                  style={{ width: '55px', height: '55px', borderRadius: '50%', cursor: 'pointer' }} //стиль курсора
+                  style={{ width: '55px', height: '55px', borderRadius: '50%', cursor: 'pointer' }}
                 />
               </Link>
             }

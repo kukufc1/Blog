@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { registerUser } from '../Api/Api';
 import styles from '../css/styles.module.css';
 
 const SignUp = () => {
@@ -46,27 +47,13 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch('https://blog-platform.kata.academy/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user: formData }),
-      });
-
-      const data = await response.json();
-      console.log('Ответ от сервера:', data);
-
-      if (!response.ok) {
-        setErrors({ server: data.message || 'Ошибка при регистрации' });
-      } else {
-        localStorage.setItem('token', data.token);
-        console.log('Регистрация успешна:', data);
-        navigate('/sign-in');
-      }
+      const data = await registerUser(formData);
+      localStorage.setItem('token', data.token);
+      console.log('Регистрация успешна:', data);
+      navigate('/sign-in');
     } catch (error) {
       console.error('Ошибка во время регистрации:', error);
-      setErrors({ server: 'Ошибка сети' });
+      setErrors({ server: 'измените данные' });
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import '../CreateArticle/CreateArticle.css';
+import { createArticle } from '../Api/Api';
 
 const CreateArticle = () => {
   const navigate = useNavigate();
@@ -53,16 +54,8 @@ const CreateArticle = () => {
     };
     console.log('Отправка данных на сервер:', articlePayload);
     try {
-      const response = await fetch('https://blog-platform.kata.academy/api/articles', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(articlePayload),
-      });
-
-      const data = await response.json();
+      const token = localStorage.getItem('token');
+      const { response, data } = await createArticle(articlePayload, token);
       if (!response.ok) {
         setErrors({ server: data.message || 'Ошибка при создании статьи' });
       } else {

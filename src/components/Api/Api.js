@@ -45,3 +45,115 @@ export const toggleFavorite = async (slug, isFavorited) => {
   return await response.json();
 };
 // !!!!!!!!!!!!!!!!!!!!
+export const createArticle = async (articlePayload, token) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(articlePayload),
+    });
+
+    const data = await response.json();
+    return { response, data };
+  } catch (error) {
+    console.error('Ошибка во время создания статьи:', error);
+    throw new Error('Ошибка сети');
+  }
+};
+// !!!!!!!!!!!!!!!!!!!!
+export const fetchEditArticle = async (slug) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${localStorage.getItem('token')}`,
+      },
+    });
+    if (!response.ok) throw new Error('Ошибка при загрузке статьи');
+    const data = await response.json();
+    return data.article;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+// !!!!!!!!!!!!!!!!!!!!
+export const updatedEditArticle = async (slug, articlePayload) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(articlePayload),
+    });
+    if (!response.ok) throw new Error('Ошибка при обновлении статьи');
+    return await response.json();
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+// !!!!!!!!!!!!!!!!!!!!
+export const updateUserProfile = async (userData, token) => {
+  const response = await fetch(`${API_BASE_URL}/user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ user: userData }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Ошибка обновления профиля');
+  }
+
+  return await response.json();
+};
+// !!!!!!!!!!!!!!!!!!!!
+
+export const loginUser = async (formData, token) => {
+  const response = await fetch(`${API_BASE_URL}/users/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ user: formData }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Ошибка при входе');
+  }
+
+  return data;
+};
+// !!!!!!!!!!!!!!!!!!!!
+export const registerUser = async (formData, token) => {
+  const response = await fetch(`${API_BASE_URL}/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ user: formData }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Ошибка при регистрации');
+  }
+
+  return data;
+};
+// !!!!!!!!!!!!!!!!!!!!
+
+// !!!!!!!!!!!!!!!!!!!!

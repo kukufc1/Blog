@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { loginUser } from '../Api/Api';
 import styles from '../css/styles.module.css';
 
 const SignIn = () => {
@@ -34,30 +35,17 @@ const SignIn = () => {
     }
 
     try {
-      const response = await fetch('https://blog-platform.kata.academy/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user: formData }),
-      });
-
-      const data = await response.json();
+      const data = await loginUser(formData);
       console.log('Ответ от сервера:', data);
 
-      if (!response.ok) {
-        setErrors({ server: data.message || 'Ошибка при входе' });
-      } else {
-        localStorage.setItem('token', data.user.token);
-        localStorage.setItem('username', data.user.username);
-
-        console.log('Вход успешен:', data);
-        navigate('/articles');
-        window.location.reload();
-      }
+      localStorage.setItem('token', data.user.token);
+      localStorage.setItem('username', data.user.username);
+      console.log('Вход успешен:', data);
+      navigate('/articles');
+      window.location.reload();
     } catch (error) {
       console.error('Ошибка во время входа:', error);
-      setErrors({ server: 'Ошибка сети' });
+      setErrors({ server: 'не правильный пароль' });
     }
   };
 

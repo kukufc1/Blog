@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { updateUserProfile } from '../Api/Api';
 import styles from '../css/styles.module.css';
 
 const Profile = ({ user, onUpdate }) => {
@@ -49,20 +50,8 @@ const Profile = ({ user, onUpdate }) => {
     };
 
     try {
-      const response = await fetch('https://blog-platform.kata.academy/api/user', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ user: userData }),
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message || 'Ошибка обновления профиля');
-      }
+      const token = localStorage.getItem('token');
+      const responseData = await updateUserProfile(userData, token);
 
       if (image) {
         localStorage.setItem('avatar', image);

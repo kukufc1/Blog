@@ -1,9 +1,9 @@
 // Modal.js
 import React from 'react';
-import './Modal.css'; // Ensure to style your modal accordingly
+import './Modal.css';
 
 const Modal = ({ isOpen, onClose, onConfirm }) => {
-  if (!isOpen) return null; // If not open, return null
+  if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">

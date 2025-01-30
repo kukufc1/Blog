@@ -1,38 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Импортируйте useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 
+import { fetchEditArticle, updatedEditArticle } from '../Api/Api';
 import '../EditArticle/EditArticle.css';
 
 const EditArticle = () => {
   const { slug } = useParams();
-  const navigate = useNavigate(); // Инициализация navigate
+  const navigate = useNavigate();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('');
-  const [tags, setTags] = useState(['']); // Изменить на массив для тегов
+  const [tags, setTags] = useState(['']);
 
   const loadArticle = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://blog-platform.kata.academy/api/articles/${slug}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${localStorage.getItem('token')}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Ошибка при загрузке статьи');
-      }
-      const data = await response.json();
-      setArticle(data.article);
-      setTitle(data.article.title);
-      setDescription(data.article.description);
-      setBody(data.article.body);
-      setTags(data.article.tagList.length > 0 ? data.article.tagList : ['']); // Инициализировать теги
+      const token = localStorage.getItem('token');
+      const articleData = await fetchEditArticle(slug, token);
+      setArticle(articleData);
+      setTitle(articleData.title);
+      setDescription(articleData.description);
+      setBody(articleData.body);
+      setTags(articleData.tagList.length > 0 ? articleData.tagList : ['']);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -51,7 +43,7 @@ const EditArticle = () => {
   };
 
   const addTag = () => {
-    setTags([...tags, '']); // Добавить новый пустой ввод для тега
+    setTags([...tags, '']);
   };
 
   const handleSubmit = async (e) => {
@@ -61,29 +53,17 @@ const EditArticle = () => {
         title,
         description,
         body,
-        tagList: tags.filter(Boolean), // Удалить пустые теги
+        tagList: tags.filter(Boolean),
       },
     };
 
     console.log('Отправляем на сервер:', articlePayload);
 
     try {
-      const response = await fetch(`https://blog-platform.kata.academy/api/articles/${slug}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(articlePayload),
-      });
-
-      if (!response.ok) {
-        throw new Error('Ошибка при обновлении статьи');
-      }
-
-      const updatedArticle = await response.json();
+      const token = localStorage.getItem('token');
+      const updatedArticle = await updatedEditArticle(slug, articlePayload, token);
       console.log('Статья обновлена:', updatedArticle);
-      navigate('/articles'); // Переход на страницу с статьями
+      navigate('/articles');
     } catch (err) {
       console.error('Ошибка при обновлении статьи:', err);
       setError(err.message);
@@ -91,7 +71,7 @@ const EditArticle = () => {
   };
 
   const clearTag = (index) => {
-    const newTags = tags.filter((_, idx) => idx !== index); // Удалить тег по указанному индексу
+    const newTags = tags.filter((_, idx) => idx !== index);
     setTags(newTags);
   };
 
