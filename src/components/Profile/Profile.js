@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from '../css/styles.module.css';
 
 const Profile = ({ user, onUpdate }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -67,6 +69,7 @@ const Profile = ({ user, onUpdate }) => {
       }
 
       onUpdate(responseData.user);
+      navigate('/articles');
     } catch (err) {
       setErrors({ server: err.message });
     }
