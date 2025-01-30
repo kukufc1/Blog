@@ -1,0 +1,120 @@
+.card {
+  background-color: #ffffff;
+  width: 80%;
+  /* max-width: 1440px;
+  min-width: 320px; */
+  padding: 20px;
+  box-shadow: 0px 4px 12px 0px #00000026;
+  margin: 40px 0 100px 0;
+}
+
+.card__flex {
+  display: flex;
+  justify-content: space-between;
+}
+.card__title {
+  h1 {
+    margin: 10px;
+    font-size: 32px;
+    line-height: 22px;
+    font-weight: normal;
+    color: #1890ff;
+  }
+  p {
+    margin: 10px;
+    font-size: 22px;
+    line-height: 32px;
+    color: #00000080;
+  }
+}
+.tags__card {
+  padding: 0;
+  margin: 20px 0 0 10px;
+  a {
+    text-decoration: none;
+  }
+}
+.card__author {
+  display: flex;
+  margin: 10px;
+  flex-direction: column;
+  /* background-color: #fff; */
+}
+.card__author__flex {
+  display: flex;
+}
+.card__author__info {
+  padding: 5px;
+  span {
+    font-size: 28px;
+    line-height: 28px;
+    color: #000000d9;
+  }
+  p {
+    margin: 0px 0 0 0;
+    font-size: 18px;
+    line-height: 22px;
+    color: #00000080;
+    white-space: nowrap;
+  }
+}
+
+.card__author__img {
+  /* margin: 0 0 0 10px; */
+  img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+  }
+}
+
+.author__btn__flex {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 0 0;
+}
+#author__btn__del {
+  padding: 10px 20px;
+  font-size: 20px;
+  line-height: 22px;
+  color: #f5222d;
+  border: 1px solid #f5222d;
+  border-radius: 5px;
+  background-color: #fff;
+  letter-spacing: 0.5px;
+}
+#author__btn__edit {
+  padding: 10px 20px;
+  font-size: 20px;
+  line-height: 22px;
+  color: #52c41a;
+  border: 1px solid #52c41a;
+  border-radius: 5px;
+  background-color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.text {
+  /* margin: 10px; */
+  padding: 10px;
+  max-height: 800px;
+  /* background-color: plum; */
+  overflow: scroll;
+  p {
+    margin: 0;
+  }
+}
+.card__likes {
+  display: flex;
+  align-items: center;
+}
+.favorite {
+  p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #000000bf;
+    transform: translate(0, 2px);
+  }
+}

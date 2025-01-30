@@ -1,0 +1,17 @@
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter';
+  background-color: #ebeef3;
+}
+
+body {
+  width: 100%;
+  background-color: #ebeef3;
+}
+input:focus {
+  outline: none;
+}

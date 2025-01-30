@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.edit__article {
+  width: 80%;
+  background-color: #fff;
+  padding: 5% 3%;
+  margin: 40px 0;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 4px 12px 0px #00000026;
+  border-radius: 5px;
+  background-color: #fff;
+
+  h1 {
+    color: #262626;
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: center;
+  }
+}
+.edit__article__title,
+.edit__article__description,
+.edit__article__text {
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #262626;
+  label {
+    padding: 10px 0;
+  }
+
+  input {
+    padding: 10px;
+    margin: 0px 0 20px 0;
+    color: #000000bf;
+    font-family: Roboto;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 24px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+  }
+  textarea {
+    border: 1px solid #d9d9d9;
+    min-height: 200px;
+  }
+}
+.edit__article__tags {
+  display: flex;
+}
+#edit__tags__form {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+
+  div:last-child {
+    margin: 1px;
+    input {
+      margin: 0;
+    }
+  }
+  h2 {
+    font-family: Roboto;
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #262626;
+    margin: 40px 0 10px 0;
+  }
+  input {
+    padding: 10px;
+    margin: 0px 0 20px 0;
+    color: #000000bf;
+    font-family: Roboto;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 24px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+  }
+}
+
+#edit__article__btn__del {
+  padding: 10px 20px;
+  font-size: 20px;
+  line-height: 22px;
+  color: #f5222d;
+  border: 1px solid #f5222d;
+  border-radius: 5px;
+  background-color: #fff;
+  letter-spacing: 0.5px;
+  margin: 0 20px;
+}
+
+#edit__article__btn__send {
+  background-color: #1890ff;
+  padding: 10px 10%;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  margin-top: 20px;
+}
+#edit__article__btn__send:hover {
+  box-shadow: inset 0px 0px 5px 5px #0f67b9ae;
+}
+#edit__tags__create {
+  align-self: flex-end;
+  margin: 0 0 5px 0;
+  button {
+    padding: 10px 20px;
+    font-size: 20px;
+    line-height: 22px;
+    color: #0f67b9ae;
+    border: 1px solid #0f67b9ae;
+    border-radius: 5px;
+    background-color: #fff;
+    letter-spacing: 0.5px;
+  }
+  button:hover {
+    box-shadow: inset 0px 0px 5px 5px #0f67b9ae;
+  }
+}
