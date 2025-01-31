@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useValidation from '../useHooks/useValidation';
 import { loginUser } from '../Api/Api';
 import styles from '../css/styles.module.css';
 
@@ -10,21 +11,9 @@ const SignIn = () => {
     email: '',
     password: '',
   });
+
   const [errors, setErrors] = useState({});
-
-  const validate = () => {
-    const newErrors = {};
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(formData.email)) {
-      newErrors.email = 'Некорректный email';
-    }
-    if (formData.password.length < 6) {
-      newErrors.password = 'Пароль должен быть не менее 6 символов';
-    }
-
-    return newErrors;
-  };
+  const { validate } = useValidation(formData, 'signIn'); // 'signIn'
 
   const handleSubmit = async (e) => {
     e.preventDefault();

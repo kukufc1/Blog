@@ -12,6 +12,7 @@ body {
   width: 100%;
   background-color: #ebeef3;
 }
+textarea:focus,
 input:focus {
   outline: none;
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { updateUserProfile } from '../Api/Api';
+import useValidation from '../useHooks/useValidation';
 import styles from '../css/styles.module.css';
 
 const Profile = ({ user, onUpdate }) => {
@@ -10,7 +11,6 @@ const Profile = ({ user, onUpdate }) => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [image, setAvatar] = useState('');
-  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -20,19 +20,15 @@ const Profile = ({ user, onUpdate }) => {
     }
   }, [user]);
 
-  const validate = () => {
-    const errors = {};
-    const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
-
-    if (newPassword && (newPassword.length < 6 || newPassword.length > 40)) {
-      errors.password = 'Пароль должен быть от 6 до 40 символов';
-    }
-    if (image && !urlPattern.test(image)) {
-      errors.image = 'Некорректный URL аватара';
-    }
-
-    return errors;
+  const formData = {
+    username,
+    email,
+    newPassword,
+    image,
   };
+
+  const [errors, setErrors] = useState({});
+  const { validate } = useValidation(formData, 'profile'); // 'signIn'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,16 +71,23 @@ const Profile = ({ user, onUpdate }) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="User Name"
-            required
+            className={errors.username ? styles.error : ''}
           />
         </div>
 
-        {errors.server && <p style={{ color: 'red' }}>{errors.server}</p>}
+        {errors.username && <span className={styles.err}>{errors.username}</span>}
 
         <div className={styles.inpt}>
           <label>Email address</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className={errors.email ? styles.error : ''}
+          />
         </div>
+        {errors.email && <span className={styles.err}>{errors.email}</span>}
 
         <div className={styles.inpt}>
           <label>New password</label>
@@ -93,16 +96,23 @@ const Profile = ({ user, onUpdate }) => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="Новый пароль"
+            className={errors.password ? styles.error : ''}
           />
         </div>
-        {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+        {errors.password && <span className={styles.err}>{errors.password}</span>}
 
         <div className={styles.inpt}>
           <label>Avatar image (url)</label>
-          <input type="text" value={image} onChange={(e) => setAvatar(e.target.value)} placeholder="URL аватара" />
+          <input
+            type="text"
+            value={image}
+            onChange={(e) => setAvatar(e.target.value)}
+            placeholder="URL аватара"
+            className={errors.image ? styles.error : ''}
+          />
+          {errors.image && <span className={styles.err}>{errors.image}</span>}
         </div>
 
-        {errors.image && <p style={{ color: 'red' }}>{errors.image}</p>}
         <div>
           <button className={styles.send} type="submit">
             Save

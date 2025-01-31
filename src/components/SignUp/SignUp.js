@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useValidation from '../useHooks/useValidation';
 import { registerUser } from '../Api/Api';
 import styles from '../css/styles.module.css';
 
@@ -13,30 +14,9 @@ const SignUp = () => {
     repeatPassword: '',
     agree: false,
   });
+
   const [errors, setErrors] = useState({});
-
-  const validate = () => {
-    const newErrors = {};
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(formData.email)) {
-      newErrors.email = 'Некорректный email';
-    }
-    if (formData.username.length < 3 || formData.username.length > 20) {
-      newErrors.username = 'Имя пользователя должно быть от 3 до 20 символов';
-    }
-    if (formData.password.length < 6 || formData.password.length > 40) {
-      newErrors.password = 'Пароль должен быть от 6 до 40 символов';
-    }
-    if (formData.password !== formData.repeatPassword) {
-      newErrors.repeatPassword = 'Пароли должны совпадать';
-    }
-    if (!formData.agree) {
-      newErrors.agree = 'Необходимо согласие на обработку персональных данных';
-    }
-
-    return newErrors;
-  };
+  const { validate } = useValidation(formData, 'signUp'); // 'signUp'
 
   const handleSubmit = async (e) => {
     e.preventDefault();

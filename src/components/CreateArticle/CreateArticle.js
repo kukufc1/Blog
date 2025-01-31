@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import styles from '../css/styles.module.css';
 import '../CreateArticle/CreateArticle.css';
+import useValidation from '../useHooks/useValidation';
 import { createArticle } from '../Api/Api';
 
 const CreateArticle = () => {
@@ -12,33 +14,13 @@ const CreateArticle = () => {
     body: '',
     tagList: [],
   });
-  const [errors, setErrors] = useState({});
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.title) {
-      newErrors.title = 'Заголовок обязателен';
-    }
-    if (!formData.description) {
-      newErrors.description = 'Описание обязательно';
-    }
-    if (!formData.body) {
-      newErrors.body = 'Содержимое обязательно';
-    }
-    if (formData.tagList.length > 3) {
-      newErrors.tags = 'Максимум 3 тега';
-    }
-    formData.tagList.forEach((tag) => {
-      if (tag.length > 7) {
-        newErrors.tags = 'Теги не должны превышать 7 символов';
-      }
-    });
-    return newErrors;
-  };
+  const [errors, setErrors] = useState({});
+  const { ValidateArticle } = useValidation(formData); // 'signUp'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = ValidateArticle();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -97,20 +79,37 @@ const CreateArticle = () => {
         <div className="createArticle__title">
           <h1>Create new article</h1>
           <label>Title</label>
-          <input type="text" name="title" value={formData.title} onChange={handleChange} />
-          {errors.title && <span>{errors.title}</span>}
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            className={errors.title ? styles.error : ''}
+          />
+          {errors.title && <span className={styles.err}>{errors.title}</span>}
         </div>
 
         <div className="createArticle__description">
           <label>Short description</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} />
-          {errors.description && <span>{errors.description}</span>}
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className={errors.description ? styles.error : ''}
+          />
+          {errors.description && <span className={styles.err}>{errors.description}</span>}
         </div>
 
         <div className="createArticle__text">
           <label>Text</label>
-          <textarea name="body" value={formData.body} onChange={handleChange} />
-          {errors.body && <span>{errors.body}</span>}
+          <textarea
+            name="body"
+            value={formData.body}
+            onChange={handleChange}
+            className={errors.body ? styles.error : ''}
+          />
+          {errors.body && <span className={styles.err}>{errors.body}</span>}
         </div>
 
         <div className="createArticle__tags">
