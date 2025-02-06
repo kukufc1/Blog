@@ -66,7 +66,7 @@ const ArticleList = () => {
 
   return (
     <div className="list">
-      <div>
+      <div id="flexAny">
         <ul className="flex_box">
           {allArticles.map((article) => (
             <li className="list__box" key={article.slug}>
@@ -88,7 +88,9 @@ const ArticleList = () => {
                     </ul>
                   </div>
                 )}
-                <p id="list__descrip">{article.description}</p>
+                <div id="list__descrip">
+                  <p>{article.description}</p>
+                </div>
               </div>
               <div className="list__author">
                 <div className="author__info">

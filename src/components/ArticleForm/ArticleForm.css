@@ -1,22 +1,16 @@
-/* .createArticle {
-  width: 80%;
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.createArticle {
+  /* min-width: 100%; */
   background-color: #fff;
-  padding: 5% 3%;
+  padding: 15% 3% 5% 3%;
   margin: 40px 0;
   border: 1px solid #d9d9d9;
   box-shadow: 0px 4px 12px 0px #00000026;
   border-radius: 5px;
   background-color: #fff;
-  h1 {
-    color: #262626;
-    font-family: Roboto;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 28px;
-    text-align: center;
-  }
-} */
-/* 
+}
+
 .createArticle__title,
 .createArticle__description,
 .createArticle__text {
@@ -121,4 +115,4 @@
 }
 #createArticle__send:hover {
   box-shadow: inset 0px 0px 5px 5px #0f67b9ae;
-} */
+}

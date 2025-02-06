@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 .w80 {
   width: 80%;
   background-color: #fff;
@@ -8,6 +10,21 @@
   border-radius: 5px;
   background-color: #fff;
   h1 {
+    color: #262626;
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: center;
+  }
+}
+.wf80 {
+  width: 80%;
+  height: 0px;
+  h1 {
+    position: relative;
+    top: 150px;
+    margin: 0;
     color: #262626;
     font-family: Roboto;
     font-size: 30px;

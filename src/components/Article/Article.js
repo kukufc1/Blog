@@ -19,6 +19,11 @@ const Article = () => {
   const [isFavorited, setIsFavorited] = useState();
 
   const handleToggleFavorite = async () => {
+    if (!token) {
+      // Если токен отсутствует, перенаправляем на страницу входа
+      navigate('/sign-in');
+      return;
+    }
     try {
       const data = await toggleFavorite(slug, isFavorited, token);
       setIsFavorited(data.article.favorited);
@@ -54,6 +59,11 @@ const Article = () => {
   };
 
   const confirmDelete = async () => {
+    if (!token) {
+      // Если токен отсутствует, перенаправляем на страницу входа
+      navigate('/sign-in');
+      return;
+    }
     try {
       await deleteArticle(slug, token);
       navigate('/articles');
