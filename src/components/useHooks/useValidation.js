@@ -1,4 +1,3 @@
-// useValidation.js
 import { useState } from 'react';
 
 const useValidation = (formData, formType) => {
@@ -51,7 +50,7 @@ const useValidation = (formData, formType) => {
     return newErrors;
   };
 
-  // ValidateArticle.js
+  // !!!!!
   const ValidateArticle = () => {
     const newErrors = {};
 

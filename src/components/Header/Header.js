@@ -6,7 +6,7 @@ import '../Header/Header.css';
 
 const Header = () => {
   const { state, dispatch } = useAuth();
-  const { user } = state; // Достаем состояние user
+  const { user } = state;
 
   const handleLogout = () => {
     dispatch({ type: 'LOGOUT' });

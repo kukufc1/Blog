@@ -10,7 +10,7 @@ import Profile from '../Profile/Profile';
 import Header from '../Header/Header';
 import CreateArticle from '../CreateArticle/CreateArticle';
 import EditArticle from '../EditArticle/EditArticle';
-import PrivateRoute from '../PrivateRoute/PrivateRoute'; // Импортируйте компонент PrivateRoute
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import '../App/App.css';
 
 const AppRoutes = () => {
@@ -20,7 +20,6 @@ const AppRoutes = () => {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
 
-    // Если данные есть, обновим состояние в контексте
     if (token && username) {
       dispatch({ type: 'LOGIN', payload: { token, username } });
     }
@@ -40,12 +39,11 @@ const AppRoutes = () => {
     <>
       <Header user={state.username} onLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<ArticleList />} /> {/* Теперь отображает ArticleList */}
+        <Route path="/" element={<ArticleList />} />
         <Route path="/articles" element={<ArticleList />} />
         <Route path="/articles/:slug" element={<Article />} />
         <Route path="/new-article" element={<PrivateRoute element={<CreateArticle />} />} />
         <Route path="/articles/:slug/edit" element={<PrivateRoute element={<EditArticle />} />} />
-        {/* Используйте PrivateRoute здесь */}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route

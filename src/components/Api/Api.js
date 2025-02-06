@@ -1,25 +1,5 @@
 const API_BASE_URL = 'https://blog-platform.kata.academy/api';
 
-// export const fetchArticles1 = async (page, token) => {
-//   const articlesPerPage = 5;
-//   const offset = (page - 1) * articlesPerPage;
-
-//   const response = await fetch(`${API_BASE_URL}/articles?limit=${articlesPerPage}&offset=${offset}`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Token ${token}`,
-//     },
-//   });
-
-//   if (!response.ok) {
-//     throw new Error('Не удалось получить статьи');
-//   }
-
-//   const data = await response.json();
-//   return { articles: data.articles, articlesCount: data.articlesCount };
-// };
-
 export const fetchArticle = async (slug, token) => {
   const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
     method: 'GET',

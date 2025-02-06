@@ -16,7 +16,7 @@ const SignUp = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const { validate } = useValidation(formData, 'signUp'); // 'signUp'
+  const { validate } = useValidation(formData, 'signUp');
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -20,7 +20,6 @@ const Article = () => {
 
   const handleToggleFavorite = async () => {
     if (!token) {
-      // Если токен отсутствует, перенаправляем на страницу входа
       navigate('/sign-in');
       return;
     }
@@ -60,7 +59,6 @@ const Article = () => {
 
   const confirmDelete = async () => {
     if (!token) {
-      // Если токен отсутствует, перенаправляем на страницу входа
       navigate('/sign-in');
       return;
     }

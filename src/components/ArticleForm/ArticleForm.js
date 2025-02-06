@@ -16,7 +16,6 @@ const ArticleForm = ({ initialData, isEditMode }) => {
   const [errors, setErrors] = useState({});
   const { ValidateArticle } = useValidation(formData);
 
-  // Устанавливаем начальные данные формы при изменении initialData
   useEffect(() => {
     setFormData(initialData);
   }, [initialData]);
@@ -53,7 +52,7 @@ const ArticleForm = ({ initialData, isEditMode }) => {
         console.log('Статья успешно создана');
       }
 
-      navigate('/articles'); // Перенаправляем на список статей после успешного выполнения
+      navigate('/articles');
     } catch (error) {
       console.error('Ошибка:', error);
       setErrors({ server: 'Ошибка при обработке данных' });
@@ -86,7 +85,6 @@ const ArticleForm = ({ initialData, isEditMode }) => {
     <div className="createArticle">
       <form onSubmit={handleSubmit}>
         <div className="createArticle__title">
-          {/* <h1>Create new article</h1> */}
           <label>Title</label>
           <input
             type="text"
