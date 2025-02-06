@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { useAuth } from '../AuthContext/AuthContext';
 import '../Header/Header.css';
 
-const Header = ({ user, onLogout }) => {
-  const avatar = localStorage.getItem('avatar');
+const Header = () => {
+  const { state, dispatch } = useAuth();
+  const { user } = state; // Достаем состояние user
+
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+  };
 
   return (
     <header>
@@ -16,19 +23,20 @@ const Header = ({ user, onLogout }) => {
             <button className="profile__crtArticle">
               <Link to="/new-article">Create Article</Link>
             </button>
-
-            <h1>{user.username}</h1>
-            {
+            <Link to="/profile">
+              <h1>{user.username}</h1>
+            </Link>
+            {user.image && (
               <Link to="/profile">
                 <img
-                  src={avatar}
+                  src={user.image}
                   alt="Avatar"
                   style={{ width: '55px', height: '55px', borderRadius: '50%', cursor: 'pointer' }}
                 />
               </Link>
-            }
+            )}
             <Link to="/">
-              <button className="profile__logOut" onClick={onLogout}>
+              <button className="profile__logOut" onClick={handleLogout}>
                 Log Out
               </button>
             </Link>

@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../AuthContext/AuthContext';
 import { updateUserProfile } from '../Api/Api';
 import useValidation from '../useHooks/useValidation';
 import styles from '../css/styles.module.css';
 
-const Profile = ({ user, onUpdate }) => {
+const Profile = ({ onUpdate }) => {
   const navigate = useNavigate();
+
+  const { state } = useAuth();
+  const { user } = state;
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -28,7 +33,7 @@ const Profile = ({ user, onUpdate }) => {
   };
 
   const [errors, setErrors] = useState({});
-  const { validate } = useValidation(formData, 'profile'); // 'signIn'
+  const { validate } = useValidation(formData, 'profile');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,12 +51,8 @@ const Profile = ({ user, onUpdate }) => {
     };
 
     try {
-      const token = localStorage.getItem('token');
+      const token = user.token;
       const responseData = await updateUserProfile(userData, token);
-
-      if (image) {
-        localStorage.setItem('avatar', image);
-      }
 
       onUpdate(responseData.user);
       navigate('/articles');

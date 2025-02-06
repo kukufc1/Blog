@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import { AuthProvider, useAuth } from '../AuthContext/AuthContext'; // Импортируйте AuthProvider и useAuth
 import ArticleList from '../ArticleList/ArticleList';
 import Article from '../Article/Article';
 import SignIn from '../SignIn/SignIn';
@@ -11,30 +12,32 @@ import CreateArticle from '../CreateArticle/CreateArticle';
 import EditArticle from '../EditArticle/EditArticle';
 import '../App/App.css';
 
-const App = () => {
-  const [user, setUser] = useState(null);
+const AppRoutes = () => {
+  const { state, dispatch } = useAuth();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
+
+    // Если данные есть, обновим состояние в контексте
     if (token && username) {
-      setUser({ username });
+      dispatch({ type: 'LOGIN', payload: { token, username } });
     }
-  }, []);
+  }, [dispatch]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    setUser(null);
+    dispatch({ type: 'LOGOUT' });
   };
 
   const handleUserUpdate = (updatedUser) => {
-    setUser(updatedUser);
+    dispatch({ type: 'LOGIN', payload: updatedUser });
   };
 
   return (
-    <Router>
-      <Header user={user} onLogout={handleLogout} />
+    <>
+      <Header user={state.username} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<ArticleList />} />
         <Route path="/articles" element={<ArticleList />} />
@@ -43,9 +46,19 @@ const App = () => {
         <Route path="/articles/:slug/edit" element={<EditArticle />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/profile" element={<Profile user={user} onUpdate={handleUserUpdate} />} />{' '}
+        <Route path="/profile" element={<Profile user={state.username} onUpdate={handleUserUpdate} />} />
       </Routes>
-    </Router>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AuthProvider>
   );
 };
 

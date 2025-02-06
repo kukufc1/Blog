@@ -5,9 +5,13 @@ import styles from '../css/styles.module.css';
 import '../CreateArticle/CreateArticle.css';
 import useValidation from '../useHooks/useValidation';
 import { createArticle } from '../Api/Api';
+import { useAuth } from '../AuthContext/AuthContext';
 
 const CreateArticle = () => {
   const navigate = useNavigate();
+  const { state } = useAuth();
+  const { user } = state;
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -16,7 +20,7 @@ const CreateArticle = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const { ValidateArticle } = useValidation(formData); // 'signUp'
+  const { ValidateArticle } = useValidation(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,9 +38,10 @@ const CreateArticle = () => {
         tagList: formData.tagList,
       },
     };
+
     console.log('Отправка данных на сервер:', articlePayload);
     try {
-      const token = localStorage.getItem('token');
+      const token = user?.token;
       const { response, data } = await createArticle(articlePayload, token);
       if (!response.ok) {
         setErrors({ server: data.message || 'Ошибка при создании статьи' });

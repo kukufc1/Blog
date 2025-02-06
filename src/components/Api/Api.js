@@ -15,12 +15,12 @@ export const fetchArticle = async (slug) => {
 };
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-export const deleteArticle = async (slug) => {
+export const deleteArticle = async (slug, token) => {
   const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Token ${localStorage.getItem('token')}`,
+      Authorization: `Token ${token}`,
     },
   });
   if (!response.ok) {
@@ -29,12 +29,12 @@ export const deleteArticle = async (slug) => {
 };
 
 // !!!!!!!!!!!!!!!!!!
-export const toggleFavorite = async (slug, isFavorited) => {
+export const toggleFavorite = async (slug, isFavorited, token) => {
   const response = await fetch(`${API_BASE_URL}/articles/${slug}/favorite`, {
     method: isFavorited ? 'DELETE' : 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Token ${localStorage.getItem('token')}`,
+      Authorization: `Token ${token}`,
     },
   });
 
@@ -64,13 +64,13 @@ export const createArticle = async (articlePayload, token) => {
   }
 };
 // !!!!!!!!!!!!!!!!!!!!
-export const fetchEditArticle = async (slug) => {
+export const fetchEditArticle = async (slug, token) => {
   try {
     const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Token ${localStorage.getItem('token')}`,
+        Authorization: `Token ${token}`,
       },
     });
     if (!response.ok) throw new Error('Ошибка при загрузке статьи');
@@ -81,13 +81,13 @@ export const fetchEditArticle = async (slug) => {
   }
 };
 // !!!!!!!!!!!!!!!!!!!!
-export const updatedEditArticle = async (slug, articlePayload) => {
+export const updatedEditArticle = async (slug, articlePayload, token) => {
   try {
     const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Token ${localStorage.getItem('token')}`,
+        Authorization: `Token ${token}`,
       },
       body: JSON.stringify(articlePayload),
     });

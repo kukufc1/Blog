@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
+import { useAuth } from '../AuthContext/AuthContext'; // Импортируйте useAuth
 import { fetchArticle, deleteArticle, toggleFavorite } from '../Api/Api';
 import '../Article/Article.css';
 import Modal from '../Modal/Modal';
@@ -9,6 +10,8 @@ import Modal from '../Modal/Modal';
 const Article = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { state } = useAuth(); // Получаем состояние аутентификации
+  const token = state.user?.token; // Получаем токен
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +20,7 @@ const Article = () => {
 
   const handleToggleFavorite = async () => {
     try {
-      const data = await toggleFavorite(slug, isFavorited);
+      const data = await toggleFavorite(slug, isFavorited, token);
       setIsFavorited(data.article.favorited);
       window.location.reload();
     } catch (err) {
@@ -30,7 +33,7 @@ const Article = () => {
     const loadArticle = async () => {
       setLoading(true);
       try {
-        const data = await fetchArticle(slug);
+        const data = await fetchArticle(slug, token);
         setArticle(data.article);
         setIsFavorited(data.article.favorited);
       } catch (err) {
@@ -40,7 +43,7 @@ const Article = () => {
       }
     };
     loadArticle();
-  }, [slug]);
+  }, [slug, token]);
 
   const handleEdit = () => {
     navigate(`/articles/${slug}/edit`);
@@ -52,7 +55,7 @@ const Article = () => {
 
   const confirmDelete = async () => {
     try {
-      await deleteArticle(slug);
+      await deleteArticle(slug, token);
       navigate('/articles');
     } catch (err) {
       console.error('Ошибка при удалении статьи:', err);

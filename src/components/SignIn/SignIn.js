@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useValidation from '../useHooks/useValidation';
 import { loginUser } from '../Api/Api';
+import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../css/styles.module.css';
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { dispatch } = useAuth(useContext);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({});
-  const { validate } = useValidation(formData, 'signIn'); // 'signIn'
+  const { validate } = useValidation(formData, 'signIn');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,11 +29,18 @@ const SignIn = () => {
       const data = await loginUser(formData);
       console.log('Ответ от сервера:', data);
 
-      localStorage.setItem('token', data.user.token);
-      localStorage.setItem('username', data.user.username);
+      dispatch({
+        type: 'LOGIN',
+        payload: {
+          token: data.user.token,
+          username: data.user.username,
+          email: data.user.email,
+          image: data.user.image,
+        },
+      });
+
       console.log('Вход успешен:', data);
       navigate('/articles');
-      window.location.reload();
     } catch (error) {
       console.error('Ошибка во время входа:', error);
       setErrors({ server: 'не правильный пароль' });

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../AuthContext/AuthContext'; // Импортируйте useAuth
 import { fetchEditArticle, updatedEditArticle } from '../Api/Api';
 import '../EditArticle/EditArticle.css';
 
 const EditArticle = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { state } = useAuth(); // Получаем состояние из контекста
+  const token = state.user?.token; // Получаем токен из состояния
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +21,6 @@ const EditArticle = () => {
   const loadArticle = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
       const articleData = await fetchEditArticle(slug, token);
       setArticle(articleData);
       setTitle(articleData.title);
@@ -60,7 +62,6 @@ const EditArticle = () => {
     console.log('Отправляем на сервер:', articlePayload);
 
     try {
-      const token = localStorage.getItem('token');
       const updatedArticle = await updatedEditArticle(slug, articlePayload, token);
       console.log('Статья обновлена:', updatedArticle);
       navigate('/articles');
